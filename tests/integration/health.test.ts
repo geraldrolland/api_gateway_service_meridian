@@ -1,3 +1,16 @@
+jest.mock('../../src/config', () => ({
+  __esModule: true,
+  default: {
+    jwt: { secret: 'test-secret' },
+    auth: {
+      jwtSecret: 'test-secret',
+      excludePaths: ['/health', '/api/auth/login', '/api/auth/register', '/api/auth/refresh-token'],
+    },
+    rateLimit: { windowMs: 900000, max: 100 },
+    routes: [],
+  },
+  logger: { info: jest.fn(), error: jest.fn(), warn: jest.fn() },
+}));
 jest.mock('../../src/config/redis', () => require('../__mocks__/redis').default);
 jest.mock('../../src/middleware/cors', () => ({
   default: (_req: any, _res: any, next: any) => next(),
